@@ -154,16 +154,16 @@
                                 ${sentence}&nbsp;&nbsp;&nbsp;<a 
                                 href="javascript: delete_ex('${id}')"
                                 >delete</a> </li>`;
-                        }
-                    }list.append(temp_html);
+                        }list.append(temp_html);
+                    }
                 }
             });
         }
 
-        function delete_ex(){
+        function delete_ex(id){
             console.log('deleting', id)
             $.ajax({
-                type: 'PPOST',
+                type: 'POST',
                 url: '/api/delete_ex',
                 data: {
                     word: word,
@@ -218,16 +218,15 @@
             <button onclick="delete_word()" id="btn-delete" class="btn btn-sparta btn-lg">
                 DELETE
             </button>
-            <!-- <div id="examples" class="container">
-                <h3 style="text-align: center; margin-bottom:1rem;"> Write your own sentences!</h3>
+            <div id="examples" class="container">
+                <h3 style="text-align: center;margin-bottom:1rem">Write your own sentences!</h3>
                 <ul id="example-list">
-                    <li id="ex-0">This sentence contains the word 'word'.&nbsp;&nbsp;&nbsp;<a href="javascript: delete_ex(0)">delete</a> </li>
-                    <li id="ex-1">I don't like using the MS Word program.&nbsp;&nbsp;&nbsp;<a href="javascript: delete_ex(1)">delete</a> </li>
                 </ul>
-                <div class="d-flex justify-content-between" style="margin-left: 20px;">
-                    <input id="new-example" class="form-control form-control-sm" style="margin-"
+                <div class="d-flex justify-content-between" style="margin-left:20px;">
+                    <input id="new-example" class="form-control form-control-sm" style="margin-right: 0.5rem">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="add_ex()">add</button>
                 </div>
-            </div> -->
+            </div>
             {% endif %}
         </div>
     </div>

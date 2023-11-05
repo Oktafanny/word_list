@@ -6,18 +6,30 @@ from flask import (
     redirect, 
     url_for
 )
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 
 from pymongo import MongoClient
 import requests
 from datetime import datetime
 from bson import ObjectId
 
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+MONGODB_URI = os.environ.get("MONGODB_URI")
+DB_NAME =  os.environ.get("DB_NAME")
+
+client = MongoClient(MONGODB_URI)
+
+db = client[DB_NAME]
+
 app = Flask(__name__)
 
-cxn_str = 'mongodb://test:sparta@ac-o9du2mt-shard-00-00.zf3qmjc.mongodb.net:27017,ac-o9du2mt-shard-00-01.zf3qmjc.mongodb.net:27017,ac-o9du2mt-shard-00-02.zf3qmjc.mongodb.net:27017/?ssl=true&replicaSet=atlas-q0n3dd-shard-0&authSource=admin&retryWrites=true&w=majority&appName=AtlasApp'
-client = MongoClient(cxn_str)
-
-db = client.dbsparta_plus_week2
+# cxn_str = 'mongodb://test:sparta@ac-o9du2mt-shard-00-00.zf3qmjc.mongodb.net:27017,ac-o9du2mt-shard-00-01.zf3qmjc.mongodb.net:27017,ac-o9du2mt-shard-00-02.zf3qmjc.mongodb.net:27017/?ssl=true&replicaSet=atlas-q0n3dd-shard-0&authSource=admin&retryWrites=true&w=majority&appName=AtlasApp'
+# client = MongoClient(cxn_str)
+# db = client.dbsparta_plus_week2
 
 @app.route('/')
 def main():
@@ -95,7 +107,7 @@ def get_exs():
     for example in example_data:
         examples.append({
             'example': example.get('example'),
-            'id': str(example.get('_id'))
+            'id': str(example.get('_id')),
         })
     return jsonify({
         'result': 'success',
